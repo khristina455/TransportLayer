@@ -1,0 +1,105 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "Emulation of transport layer",
+        "title": "Transport Layer",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/send": {
+            "post": {
+                "description": "Receive message from app layer and broke o segments for channel layer",
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "Receive message from app layer",
+                "parameters": [
+                    {
+                        "description": "Message from chat",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.MessageApp"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/transfer": {
+            "post": {
+                "description": "Transfer message to app layer through transport layer",
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "Transfer message",
+                "parameters": [
+                    {
+                        "description": "Decoded message from channel layer",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.MessageChannel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.MessageApp": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "sender": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.MessageChannel": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "numOfSegment": {
+                    "type": "integer"
+                },
+                "totalSegments": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

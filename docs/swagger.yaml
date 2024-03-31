@@ -1,0 +1,69 @@
+basePath: /
+definitions:
+  main.MessageApp:
+    properties:
+      content:
+        type: string
+      date:
+        type: string
+      sender:
+        type: string
+    type: object
+  main.MessageChannel:
+    properties:
+      message:
+        items:
+          type: integer
+        type: array
+      numOfSegment:
+        type: integer
+      totalSegments:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Emulation of transport layer
+  title: Transport Layer
+  version: "1.0"
+paths:
+  /send:
+    post:
+      consumes:
+      - application/json
+      description: Receive message from app layer and broke o segments for channel
+        layer
+      parameters:
+      - description: Message from chat
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/main.MessageApp'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Receive message from app layer
+  /transfer:
+    post:
+      consumes:
+      - application/json
+      description: Transfer message to app layer through transport layer
+      parameters:
+      - description: Decoded message from channel layer
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/main.MessageChannel'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Transfer message
+schemes:
+- http
+swagger: "2.0"
