@@ -1,0 +1,8 @@
+NumOfSegment  int       `json:"numOfSegment"`
+TotalSegments int       `json:"totalSegments"`
+Message       []byte    `json:"message"`
+Date          time.Time `json:"sendDate"`
+Sender        string    `json:"sender"`
+MessageId     int       `json:"messageId"`
+
+{"numOfSegment": 1, "totalSegments": 2, "message": [0, 3, 5], "sende": "Mark", "messageId": 4}
